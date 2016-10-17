@@ -219,7 +219,7 @@
         <h2>
             <span class="glyphicon glyphicon-chevron-left"
                   ng-click="dayOffset = dayOffset > 0 ? dayOffset-1 : 0;"></span>
-            {{ getSelectedDate() | date:"d/M/y" }}
+            {{ getSelectedDate() | date:"fullDate" }}
             <span class="glyphicon glyphicon-chevron-right" ng-click="dayOffset = dayOffset+1;"></span>
         </h2>
 
