@@ -99,7 +99,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="employee in employees">
+                <tr ng-repeat="employee in employees | orderBy:'name'">
                     <td>
                         {{ employee.name }}
                     </td>
