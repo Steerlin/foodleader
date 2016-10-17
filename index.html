@@ -57,7 +57,6 @@
     <div class="row">
 
         <div class="col-md-12">
-            <h1>Employees</h1>
 
             <div class="well well-sm">
 
@@ -123,7 +122,6 @@
     <div class="row">
 
         <div class="col-md-12">
-            <h1>Menu</h1>
 
             <div class="well well-sm clearfix">
 
@@ -213,7 +211,7 @@
         <select
             class="form-control"
             ng-model="selectedEmployeeId"
-            ng-options="employee.employeeId as employee.name for employee in employees"
+            ng-options="employee.employeeId as employee.name for employee in employees | orderBy:'name' "
             ng-change="loadOrderItems()">
             <option value="">Select an employee to order for</option>
         </select>
