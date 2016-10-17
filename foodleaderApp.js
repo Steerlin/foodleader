@@ -8,6 +8,16 @@ angular.module('foodleaderApp', ['ngResource'])
         return $resource('menu.json');
     }])
 
+    .factory('OrderItemResource', ['$resource', function ($resource) {
+        return $resource('orders/:employeeId.json');
+    }])
+
+    .factory('SaveOrderItems', ['$http', function ($http) {
+        return function (employeeId, orderItems) {
+            return $http.post('save_order.php?' + employeeId, orderItems);
+        };
+    }])
+
     .factory('SaveEmployees', ['$http', function ($http) {
         return function (employees) {
             return $http.post('save_employees.php', employees);
@@ -85,6 +95,55 @@ angular.module('foodleaderApp', ['ngResource'])
 
         }]
     )
+
+    .controller('OrderController', [
+        'MenuItemResource',
+        'EmployeeResource',
+        'OrderItemResource',
+        'SaveOrderItems',
+        '$scope',
+        function (MenuItemResource, EmployeeResource, OrderItemResource, SaveOrderItems, $scope) {
+
+            $scope.dayOffset = 0;
+            $scope.selectedEmployeeId = localStorage.getItem("selectedEmployeeId");
+
+            $scope.getSelectedDate = function () {
+                return moment().add($scope.dayOffset, 'days').format('YYYY-MM-DD');
+            };
+
+            $scope.menuItems = MenuItemResource.query();
+            $scope.employees = EmployeeResource.query();
+
+            $scope.loadOrderItems = function () {
+                localStorage.setItem("selectedEmployeeId", $scope.selectedEmployeeId);
+                $scope.orderItems = OrderItemResource.query({'employeeId': $scope.selectedEmployeeId});
+            };
+            $scope.loadOrderItems();
+
+            $scope.order = function (menuItem) {
+                var orderItem = {
+                    'employeeId': $scope.selectedEmployeeId,
+                    'name': menuItem.name,
+                    'menuItemId': menuItem.menuItemId,
+                    'price': menuItem.price,
+                    'date': $scope.getSelectedDate()
+                };
+                $scope.orderItems.push(orderItem);
+                SaveOrderItems($scope.selectedEmployeeId, $scope.orderItems);
+            };
+
+            $scope.getOrdersOnDate = function(date) {
+                return _.filter($scope.orderItems, {'date': date});
+            };
+
+            $scope.getTotal = function(orderItems) {
+                return _.sumBy(orderItems, 'price');
+            };
+
+
+
+        }
+    ])
 
 ;
 
