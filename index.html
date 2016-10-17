@@ -231,15 +231,21 @@
             <tr ng-repeat="orderItem in getOrdersOnDate(getSelectedDate())">
                 <td align="left">
                     {{ orderItem.name }}
-                </td>
+</td>
                 <td align="right">
                     {{ orderItem.price | currency:"€ ":2 }}
+                </td>
+                <td>
+                    <a ng-click="removeOrder(orderItem)" class="pull-right">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
                 </td>
             </tr>
             <tfoot>
             <tr>
                 <th>Total</th>
                 <td align="right">{{ getTotal(getOrdersOnDate(getSelectedDate())) | currency:"€ ":2 }}</td>
+                <td></td>
             </tr>
             </tfoot>
         </table>

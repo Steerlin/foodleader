@@ -141,6 +141,11 @@ angular.module('foodleaderApp', ['ngResource'])
                 SaveOrderItems($scope.selectedEmployeeId, $scope.orderItems);
             };
 
+            $scope.removeOrder = function(orderItem) {
+                $scope.orderItems = _.without($scope.orderItems, orderItem);
+                SaveOrderItems($scope.selectedEmployeeId, $scope.orderItems);
+            };
+
             $scope.getOrdersOnDate = function (date) {
                 return _.filter($scope.orderItems, {'date': date});
             };
