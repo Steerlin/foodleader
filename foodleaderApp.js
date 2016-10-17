@@ -12,6 +12,15 @@ angular.module('foodleaderApp', ['ngResource'])
         return $resource('orders/:employeeId.json');
     }])
 
+    .controller('GihpyController', [
+        '$http', '$scope', function ($http, $scope) {
+            $http.get('http://api.giphy.com/v1/gifs/search?q=food&api_key=dc6zaTOxFJmzC&limit=1&offset=0&limit=100').then(function (data) {
+                var random = Math.floor((Math.random() * 100));
+                $scope.giphy = data.data.data[random].images.original.url;
+            });
+        }
+    ])
+
     .factory('SaveOrderItems', ['$http', function ($http) {
         return function (employeeId, orderItems) {
             return $http.post('save_order.php?' + employeeId, orderItems);
@@ -132,14 +141,13 @@ angular.module('foodleaderApp', ['ngResource'])
                 SaveOrderItems($scope.selectedEmployeeId, $scope.orderItems);
             };
 
-            $scope.getOrdersOnDate = function(date) {
+            $scope.getOrdersOnDate = function (date) {
                 return _.filter($scope.orderItems, {'date': date});
             };
 
-            $scope.getTotal = function(orderItems) {
+            $scope.getTotal = function (orderItems) {
                 return _.sumBy(orderItems, 'price');
             };
-
 
 
         }
