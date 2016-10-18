@@ -43,6 +43,7 @@
         <nav>
             <ul class="nav nav-pills pull-right" ng-init="activeSection = 'order'">
                 <li role="presentation"><a href="#" ng-click="activeSection = 'order'">Order</a></li>
+                <li role="presentation"><a href="#" ng-click="activeSection = 'overview'">Overview</a></li>
                 <li role="presentation"><a href="#" ng-click="activeSection = 'menu'">Menu</a></li>
                 <li role="presentation"><a href="#" ng-click="activeSection = 'employees'">Employees</a></li>
                 <li role="presentation"><a href="#" ng-click="activeSection = 'paying'">Paying</a></li>
@@ -271,6 +272,59 @@
     </div>
 
 
+</div>
+
+<div class="container" ng-if="activeSection == 'overview'" ng-controller="OverviewController">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="well well-sm clearfix">
+
+                <button class="btn btn-default btn-lg pull-left"
+                        ng-click="dayOffset = dayOffset > 0 ? dayOffset-1 : 0;">
+                    <span class="glyphicon glyphicon-chevron-left "
+                    ></span>
+                </button>
+                <button class="btn btn-default btn-lg pull-right"
+                        ng-click="dayOffset = dayOffset+1;">
+                    <span class="glyphicon glyphicon-chevron-right "
+                    ></span>
+                </button>
+                <h2 class="text-center">
+                    {{ getSelectedDate() | date:"fullDate" }}
+                </h2>
+
+            </div>
+
+            <p class="text-muted text-center" ng-show="getOrdersOnDate(getSelectedDate()).length < 1">
+                No orders found
+            </p>
+
+            <table class="table table-striped" ng-show="getOrdersOnDate(getSelectedDate()).length > 0">
+
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Menu-item</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="order in getOrdersOnDate(getSelectedDate())">
+                    <td>
+                        {{ getEmployeeName(order.employeeId) }}
+                    </td>
+                    <td>
+                        {{ order.name }}
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
 </div>
 
 <div class="container">

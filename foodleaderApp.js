@@ -12,6 +12,10 @@ angular.module('foodleaderApp', ['ngResource'])
         return $resource('orders/:employeeId.json');
     }])
 
+    .factory('AllOrdersResource', ['$resource', function ($resource) {
+        return $resource('all_orders.php');
+    }])
+
     .controller('GihpyController', [
         '$http', '$scope', function ($http, $scope) {
             $http.get('http://api.giphy.com/v1/gifs/search?q=food&api_key=dc6zaTOxFJmzC&limit=1&offset=0&limit=100').then(function (data) {
@@ -154,6 +158,33 @@ angular.module('foodleaderApp', ['ngResource'])
                 return _.sumBy(orderItems, 'price');
             };
 
+
+        }
+    ])
+
+    .controller('OverviewController', [
+        'AllOrdersResource',
+        'EmployeeResource',
+        '$scope',
+        function (AllOrdersResource, EmployeeResource, $scope) {
+
+            $scope.dayOffset = 0;
+
+            $scope.allOrders = AllOrdersResource.query();
+            $scope.employees = EmployeeResource.query();
+
+            $scope.getSelectedDate = function () {
+                return moment().add($scope.dayOffset, 'days').format('YYYY-MM-DD');
+            };
+
+            $scope.getEmployeeName = function (employeeId) {
+                var employee = _.find($scope.employees, {'employeeId': employeeId});
+                return employee ? employee.name : null;
+            };
+
+            $scope.getOrdersOnDate = function (date) {
+                return _.filter($scope.allOrders, {'date': date});
+            };
 
         }
     ])
