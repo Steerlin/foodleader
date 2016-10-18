@@ -18,9 +18,9 @@ angular.module('foodleaderApp', ['ngResource'])
 
     .controller('GihpyController', [
         '$http', '$scope', function ($http, $scope) {
-            $http.get('http://api.giphy.com/v1/gifs/search?q=food&api_key=dc6zaTOxFJmzC&limit=1&offset=0&limit=100').then(function (data) {
-                var random = Math.floor((Math.random() * 100));
-                $scope.giphy = data.data.data[random].images.original.url;
+            var url = 'http://api.giphy.com/v1/gifs/search?q=food&api_key=dc6zaTOxFJmzC&limit=1&offset=' + (Math.floor((Math.random() * 1000))).toString();
+            $http.get(url).then(function (data) {
+                $scope.giphy = data.data.data[0].images.original.url;
             });
         }
     ])
@@ -167,7 +167,7 @@ angular.module('foodleaderApp', ['ngResource'])
             function ($scope) {
 
                 $scope.isAdmin = function () {
-                    return $scope.adminPassword == 'food';
+                    return md5($scope.adminPassword) == '62506be34d574da4a0d158a67253ea99';
                 }
 
             }
