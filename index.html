@@ -27,30 +27,63 @@
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
     <!-- Latest compiled and minified JavaScript -->
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
-    <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"-->
-    <!--crossorigin="anonymous"></script>-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 
     <!-- Custom styles for this template -->
     <link href="jumbotron-narrow.css" rel="stylesheet">
 
 </head>
 
-<body>
+<body ng-controller="NavigationController">
 
 <div class="container">
-    <div class="header clearfix">
-        <nav>
-            <ul class="nav nav-pills pull-right" ng-init="activeSection = 'order'">
-                <li role="presentation"><a href="#" ng-click="activeSection = 'order'">Order</a></li>
-                <li role="presentation"><a href="#" ng-click="activeSection = 'overview'">Overview</a></li>
-                <li role="presentation"><a href="#" ng-click="activeSection = 'menu'">Menu</a></li>
-                <li role="presentation"><a href="#" ng-click="activeSection = 'employees'">Employees</a></li>
-                <li role="presentation"><a href="#" ng-click="activeSection = 'paying'">Paying</a></li>
-            </ul>
-        </nav>
-        <h3 class="text-muted">Foodleader</h3>
-    </div>
+
+    <nav class="navbar navbar-default" >
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Foodleader</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav" ng-init="activeSection = 'order'">
+                    <li ng-class="{ 'active' : (activeSection == 'order') }">
+                        <a href="#" ng-click="activeSection = 'order'">Order</a>
+                    </li>
+                    <li ng-class="{ 'active' : (activeSection == 'overview') }" ng-show="isAdmin()">
+                        <a href="#" ng-click="activeSection = 'overview'">Overview</a>
+                    </li>
+                    <li ng-class="{ 'active' : (activeSection == 'menu') }" ng-show="isAdmin()">
+                        <a href="#" ng-click="activeSection = 'menu'">Menu</a>
+                    </li>
+                    <li ng-class="{ 'active' : (activeSection == 'employees') }" ng-show="isAdmin()">
+                        <a href="#" ng-click="activeSection = 'employees'">Employees</a>
+                    </li>
+                    <li ng-class="{ 'active' : (activeSection == 'paying') }" ng-show="isAdmin()">
+                        <a href="#" ng-click="activeSection = 'paying'">Paying</a>
+                    </li>
+                </ul>
+
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Admin password" ng-model="adminPassword" ng-hide="isAdmin()">
+                    </div>
+                </form>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
 </div>
 
 <div class="container" ng-if="activeSection == 'employees'" ng-controller="EmployeeController">
