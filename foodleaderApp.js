@@ -162,6 +162,34 @@ angular.module('foodleaderApp', ['ngResource'])
         }
     ])
 
+    .controller('PaymentController', [
+        'EmployeeResource',
+        'OrderItemResource',
+        'SaveOrderItems',
+        '$scope',
+        function (EmployeeResource, OrderItemResource, SaveOrderItems, $scope) {
+
+            $scope.employees = EmployeeResource.query();
+
+            $scope.loadOrderItems = function () {
+                if ($scope.selectedEmployeeId == undefined) { return; }
+                $scope.orders = OrderItemResource.query({'employeeId': $scope.selectedEmployeeId});
+            };
+            $scope.loadOrderItems();
+
+            $scope.clearOrders = function () {
+                $scope.orders = [];
+                SaveOrderItems($scope.selectedEmployeeId, $scope.orders);
+                $scope.loadOrderItems();
+            };
+
+            $scope.getTotal = function (orderItems) {
+                return _.sumBy(orderItems, 'price');
+            };
+
+        }
+    ])
+
     .controller('NavigationController', [
             '$scope',
             function ($scope) {

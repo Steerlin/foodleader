@@ -42,7 +42,7 @@
 
 <div class="container">
 
-    <nav class="navbar navbar-default" >
+    <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -71,14 +71,15 @@
                     <li ng-class="{ 'active' : (activeSection == 'employees') }" ng-show="isAdmin()">
                         <a href="#" ng-click="activeSection = 'employees'">Employees</a>
                     </li>
-                    <li ng-class="{ 'active' : (activeSection == 'paying') }" ng-show="isAdmin()">
-                        <a href="#" ng-click="activeSection = 'paying'">Paying</a>
+                    <li ng-class="{ 'active' : (activeSection == 'payments') }" ng-show="isAdmin()">
+                        <a href="#" ng-click="activeSection = 'payments'">Payments</a>
                     </li>
                 </ul>
 
                 <form class="navbar-form navbar-right">
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Admin password" ng-model="adminPassword" ng-hide="isAdmin()">
+                        <input type="password" class="form-control" placeholder="Admin password"
+                               ng-model="adminPassword" ng-hide="isAdmin()">
                     </div>
                 </form>
             </div><!-- /.navbar-collapse -->
@@ -356,6 +357,74 @@
                 </tbody>
 
             </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="container" ng-if="activeSection == 'payments'" ng-controller="PaymentController">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="well well-sm clearfix">
+
+                <select
+                    class="form-control"
+                    ng-model="selectedEmployeeId"
+                    ng-options="employee.employeeId as employee.name for employee in employees | orderBy:'name' "
+                    ng-change="loadOrderItems()">
+                    <option value="">Select an employee to order for</option>
+                </select>
+
+            </div>
+
+            <p class="text-muted text-center" ng-show="orders.length == 0">
+                No orders found
+            </p>
+
+            <table class="table table-striped" ng-show="orders.length > 0">
+
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Menu-item</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="order in orders | orderBy:'date'">
+                    <td>
+                        {{ order.date }}
+                    </td>
+                    <td>
+                        {{ order.name }}
+                    </td>
+                    <td>
+                        {{ order.price | currency:"€ ":2}}
+                    </td>
+                </tr>
+                </tbody>
+
+                <tfoot>
+                <tr>
+                    <th>Total</th>
+                    <th></th>
+                    <th>{{ getTotal(orders) | currency:"€ ": 2 }}</th>
+                </tr>
+                </tfoot>
+
+            </table>
+
+            <p class="text-center" ng-show="orders.length > 0">
+
+                <button class="btn btn-lg btn-danger"
+                        ng-click="clearOrders()">
+                    Erase all orders
+                </button>
+
+            </p>
 
         </div>
     </div>
