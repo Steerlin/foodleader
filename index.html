@@ -242,70 +242,104 @@
 </div>
 
 <div class="container" ng-if="activeSection == 'order'" ng-controller="OrderController">
-    <div class="jumbotron">
 
-        <select
-            class="form-control"
-            ng-model="selectedEmployeeId"
-            ng-options="employee.employeeId as employee.name for employee in employees | orderBy:'name' "
-            ng-change="loadOrderItems()">
-            <option value="">Select an employee to order for</option>
-        </select>
 
-        <h2>
-            <span class="glyphicon glyphicon-chevron-left"
-                  ng-click="dayOffset = dayOffset > 0 ? dayOffset-1 : 0;"></span>
-            {{ getSelectedDate() | date:"fullDate" }}
-            <span class="glyphicon glyphicon-chevron-right" ng-click="dayOffset = dayOffset+1;"></span>
-        </h2>
+    <div class="row">
 
-        <p class="text-center" ng-show="selectedEmployeeId && getOrdersOnDate(getSelectedDate()).length == 0">
-            No orders yet
-        </p>
+        <div class="col-md-12">
 
-        <table class="table" ng-show="getOrdersOnDate(getSelectedDate()).length > 0">
-            <tr ng-repeat="orderItem in getOrdersOnDate(getSelectedDate())">
-                <td align="left">
-                    {{ orderItem.name }}
-                </td>
-                <td align="right">
-                    {{ orderItem.price | currency:"€ ":2 }}
-                </td>
-                <td>
-                    <a ng-click="removeOrder(orderItem)" class="pull-right">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </a>
-                </td>
-            </tr>
-            <tfoot>
-            <tr>
-                <th>Total</th>
-                <td align="right">{{ getTotal(getOrdersOnDate(getSelectedDate())) | currency:"€ ":2 }}</td>
-                <td></td>
-            </tr>
-            </tfoot>
-        </table>
+            <div class="well well-sm">
 
-    </div>
+                <p>
 
-    <div class="row marketing" ng-if="selectedEmployeeId">
+                    <select
+                        class="form-control"
+                        ng-model="selectedEmployeeId"
+                        ng-options="employee.employeeId as employee.name for employee in employees | orderBy:'name' "
+                        ng-change="loadOrderItems()">
+                        <option value="">Select an employee to order for</option>
+                    </select>
 
-        <div class="col-lg-12 " ng-repeat="menuItem in menuItems">
-            <div class="well">
+                </p>
 
-                <button class="btn  pull-right btn-success"
-                        ng-click="order(menuItem)">
-                    Order
+                <button class="btn btn-default btn-lg pull-left"
+                        ng-click="dayOffset = dayOffset > 0 ? dayOffset-1 : 0;">
+                    <span class="glyphicon glyphicon-chevron-left "
+                    ></span>
                 </button>
-                <h4>
-                    {{ menuItem.name}} - {{ menuItem.price | currency:"€ ":2 }}
-                </h4>
-                <p>{{ menuItem.description }}</p>
+                <button class="btn btn-default btn-lg pull-right"
+                        ng-click="dayOffset = dayOffset+1;">
+                    <span class="glyphicon glyphicon-chevron-right "
+                    ></span>
+                </button>
+
+                <h3 class="text-center">
+                    {{ getSelectedDate() | date:"fullDate" }}
+                </h3>
+
             </div>
+
         </div>
 
-    </div>
+        <div class="col-md-12">
 
+            <div class="well well-sm">
+
+
+                <h3 class="text-center">You ordered</h3>
+
+                <p class="text-center" ng-show="selectedEmployeeId && getOrdersOnDate(getSelectedDate()).length == 0">
+                    No orders yet
+                </p>
+
+                <table class="table" ng-show="getOrdersOnDate(getSelectedDate()).length > 0">
+                    <tr ng-repeat="orderItem in getOrdersOnDate(getSelectedDate())">
+                        <td align="left">
+                            {{ orderItem.name }}
+                        </td>
+                        <td align="right">
+                            {{ orderItem.price | currency:"€ ":2 }}
+                        </td>
+                        <td>
+                            <a ng-click="removeOrder(orderItem)" class="pull-right">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tfoot>
+                    <tr>
+                        <th>Total</th>
+                        <td align="right">{{ getTotal(getOrdersOnDate(getSelectedDate())) | currency:"€ ":2 }}</td>
+                        <td></td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+        <div class="col-md-12">
+
+        <div ng-show="selectedEmployeeId" class="well clearfix">
+
+            <h3 class="text-center">Today's menu</h3>
+
+            <div class="col-lg-12 " ng-repeat="menuItem in menuItems">
+                <div class="well">
+
+                    <button class="btn  pull-right btn-success"
+                            ng-click="order(menuItem)">
+                        Order
+                    </button>
+                    <h4>
+                        {{ menuItem.name}} - {{ menuItem.price | currency:"€ ":2 }}
+                    </h4>
+                    <p>{{ menuItem.description }}</p>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </div>
 
 </div>
 
