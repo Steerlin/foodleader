@@ -124,6 +124,10 @@ angular.module('foodleaderApp', ['ngResource'])
                 return moment().add($scope.dayOffset, 'days').format('YYYY-MM-DD');
             };
 
+            $scope.isAFriday = function (date) {
+                return 5 == moment(date).format('e');
+            };
+
             $scope.menuItems = MenuItemResource.query();
             $scope.employees = EmployeeResource.query();
 
