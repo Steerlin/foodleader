@@ -130,7 +130,10 @@ angular.module('foodleaderApp', ['ngResource'])
                 return 5 == moment(date).format('e');
             };
 
-            $scope.menuItems = MenuItemResource.query();
+            MenuItemResource.query().$promise.then(function (menuItems) {
+                $scope.menuItems = _.groupBy(menuItems, 'category');
+            });
+
             $scope.employees = EmployeeResource.query();
 
             $scope.loadOrderItems = function () {
