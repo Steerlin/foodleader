@@ -263,6 +263,7 @@
                 </p>
 
                 <button class="btn btn-default btn-lg pull-left"
+                        ng-disabled="dayOffset == 0"
                         ng-click="dayOffset = dayOffset > 0 ? dayOffset-1 : 0;">
                     <span class="glyphicon glyphicon-chevron-left "
                     ></span>
@@ -360,6 +361,7 @@
             <div class="well well-sm clearfix">
 
                 <button class="btn btn-default btn-lg pull-left"
+                        ng-disabled="dayOffset == 0"
                         ng-click="dayOffset = dayOffset > 0 ? dayOffset-1 : 0;">
                     <span class="glyphicon glyphicon-chevron-left "
                     ></span>
