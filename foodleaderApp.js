@@ -87,12 +87,14 @@ angular.module('foodleaderApp', ['ngResource'])
                 $scope.menuItems = MenuItemResource.query();
             }();
 
-            $scope.addMenuItem = function (name, price, description) {
+            $scope.addMenuItem = function (name, category, price, orderOneDayBefore, description) {
 
                 var menuItem = {
                     'menuItemId': 'MenuItem-' + uuid.v4(),
                     'name': name,
+                    'category': category,
                     'price': price,
+                    'orderOneDayBefore': orderOneDayBefore,
                     'description': description
                 };
                 $scope.menuItems.push(menuItem);
@@ -176,7 +178,9 @@ angular.module('foodleaderApp', ['ngResource'])
             $scope.employees = EmployeeResource.query();
 
             $scope.loadOrderItems = function () {
-                if ($scope.selectedEmployeeId == undefined) { return; }
+                if ($scope.selectedEmployeeId == undefined) {
+                    return;
+                }
                 $scope.orders = OrderItemResource.query({'employeeId': $scope.selectedEmployeeId});
             };
             $scope.loadOrderItems();
