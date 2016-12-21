@@ -1,19 +1,19 @@
 angular.module('foodleaderApp', ['ngResource'])
 
     .factory('EmployeeResource', ['$resource', function ($resource) {
-        return $resource('employees.json');
+        return $resource('employees.json?' + Math.random());
     }])
 
     .factory('MenuItemResource', ['$resource', function ($resource) {
-        return $resource('menu.json');
+        return $resource('menu.json?' + Math.random());
     }])
 
     .factory('OrderItemResource', ['$resource', function ($resource) {
-        return $resource('orders/:employeeId.json');
+        return $resource('orders/:employeeId.json?' + Math.random());
     }])
 
     .factory('AllOrdersResource', ['$resource', function ($resource) {
-        return $resource('all_orders.php');
+        return $resource('all_orders.php?' + Math.random());
     }])
 
     .controller('GihpyController', [
