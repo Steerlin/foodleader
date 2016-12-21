@@ -2,7 +2,11 @@
 
 $json = '';
 foreach (glob("orders/*.json") as $file) {
-    $json .= file_get_contents($file);
+    $contents = file_get_contents($file);
+    if ($contents == '[]') {
+        continue;
+    }
+    $json .= $contents;
 }
 
 echo str_replace('][', ',', $json);
