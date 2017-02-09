@@ -148,6 +148,7 @@ angular.module('foodleaderApp', ['ngResource'])
                     'name': menuItem.name,
                     'menuItemId': menuItem.menuItemId,
                     'price': menuItem.price,
+                    'remarks': menuItem.remarks,
                     'date': $scope.getSelectedDate()
                 };
                 $scope.orderItems.push(orderItem);
