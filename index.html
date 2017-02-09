@@ -241,7 +241,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="menuItem in menuItems" ng-class="{'success': menuItem.active, 'danger': !menuItem.active}">
+                <tr ng-repeat="menuItem in menuItems"
+                    ng-class="{'success': menuItem.active, 'danger': !menuItem.active}">
                     <td>
                         <button class="btn btn-link btn-sm"
                                 ng-click="menuItem.active = !menuItem.active; saveMenu(menuItems);">
@@ -324,7 +325,7 @@
             <div class="well well-sm">
 
 
-                <h3 class="text-center">You ordered</h3>
+                <h3 class="text-center">Your orders for this day</h3>
 
                 <p class="text-center" ng-show="selectedEmployeeId && getOrdersOnDate(getSelectedDate()).length == 0">
                     No orders yet
@@ -359,10 +360,11 @@
 
             </div>
         </div>
-
+    </div>
+    <div class="row" ng-show="selectedEmployeeId">
         <div class="col-md-12">
 
-            <div ng-show="selectedEmployeeId" class="well clearfix">
+            <div  class="well clearfix">
 
                 <h3 class="text-center">Today's menu</h3>
 
@@ -392,6 +394,54 @@
                         </tr>
                     </table>
                 </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-show="selectedEmployeeId">
+        <div class="col-md-12">
+
+            <div  class="well clearfix">
+
+                <h3 class="text-center">Unpaid orders</h3>
+
+                <p class="text-muted text-center" ng-show="orderItems.length == 0">
+                    No orders found
+                </p>
+
+                <table class="table table-striped" ng-show="orderItems.length > 0">
+
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Menu-item</th>
+                        <th>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="orderItem in orderItems | orderBy:'date'">
+                        <td>
+                            {{ orderItem.date }}
+                        </td>
+                        <td>
+                            {{ orderItem.name }}
+                        </td>
+                        <td>
+                            {{ orderItem.price | currency:"€ ":2}}
+                        </td>
+                    </tr>
+                    </tbody>
+
+                    <tfoot>
+                    <tr>
+                        <th>Total</th>
+                        <th></th>
+                        <th>{{ getTotal(orderItems) | currency:"€ ": 2 }}</th>
+                    </tr>
+                    </tfoot>
+
+                </table>
 
             </div>
         </div>
