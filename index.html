@@ -232,6 +232,7 @@
 
                 <thead>
                 <tr>
+                    <th></th>
                     <th>Name</th>
                     <th>Category</th>
                     <th>Price</th>
@@ -240,7 +241,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="menuItem in menuItems">
+                <tr ng-repeat="menuItem in menuItems" ng-class="{'success': menuItem.active, 'danger': !menuItem.active}">
+                    <td>
+                        <button class="btn btn-link btn-sm"
+                                ng-click="menuItem.active = !menuItem.active; saveMenu(menuItems);">
+                            <i ng-show="menuItem.active" class="glyphicon glyphicon-eye-open text-success"></i>
+                            <i ng-hide="menuItem.active" class="glyphicon glyphicon-eye-close text-danger"></i>
+                        </button>
+                    </td>
                     <td>
                         {{ menuItem.name }}
                     </td>
@@ -254,7 +262,7 @@
                         <span class="glyphicon glyphicon-check" ng-if="menuItem.orderOneDayBefore"></span>
                     </td>
                     <td>
-                        <button class="btn btn-link pull-right"
+                        <button class="btn btn-link pull-right btn-sm"
                                 ng-click="removeMenuItem(menuItem)">
                             <i class="glyphicon glyphicon-trash pull-right"></i>
                         </button>

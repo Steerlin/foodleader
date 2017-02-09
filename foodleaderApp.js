@@ -92,6 +92,7 @@ angular.module('foodleaderApp', ['ngResource'])
                 var menuItem = {
                     'menuItemId': 'MenuItem-' + uuid.v4(),
                     'name': name,
+                    'active': true,
                     'category': category,
                     'price': price,
                     'orderOneDayBefore': orderOneDayBefore,
@@ -131,7 +132,7 @@ angular.module('foodleaderApp', ['ngResource'])
             };
 
             MenuItemResource.query().$promise.then(function (menuItems) {
-                $scope.menuItems = _.groupBy(menuItems, 'category');
+                $scope.menuItems = _.groupBy(_.filter(menuItems, 'active'), 'category');
             });
 
             $scope.employees = EmployeeResource.query();
