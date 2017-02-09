@@ -225,6 +225,10 @@ angular.module('foodleaderApp', ['ngResource'])
             $scope.allOrders = AllOrdersResource.query();
             $scope.employees = EmployeeResource.query();
 
+            $scope.getSummary = function(date) {
+                return _.countBy($scope.getOrdersOnDate(date), 'name');
+            };
+
             $scope.getSelectedDate = function () {
                 return moment().add($scope.dayOffset, 'days').format('YYYY-MM-DD');
             };

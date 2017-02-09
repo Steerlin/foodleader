@@ -373,7 +373,7 @@
                             </td>
                             <td class="col-md-2 text-right">
                                 <input type="text" class="form-control input-sm " placeholder="remarks"
-                                        ng-model="menuItem.remarks">
+                                       ng-model="menuItem.remarks">
                             </td>
                             <td class="col-md-1">
                                 <button class="btn btn-sm pull-right btn-success"
@@ -399,7 +399,6 @@
 <div class="container" ng-if="activeSection == 'overview'" ng-controller="OverviewController">
 
     <div class="row">
-
         <div class="col-md-12">
 
             <div class="well well-sm clearfix">
@@ -420,6 +419,41 @@
                 </h2>
 
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Summary</h2>
+
+            <p class="text-muted text-center" ng-show="getOrdersOnDate(getSelectedDate()).length < 1">
+                No orders found
+            </p>
+            <table class="table table-striped" ng-show="getOrdersOnDate(getSelectedDate()).length > 0">
+
+                <thead>
+                <tr>
+                    <th>Menu-item</th>
+                    <th>Count</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="(item, count) in getSummary(getSelectedDate())">
+                    <td>
+                        {{ item }}
+                    </td>
+                    <td>
+                        {{ count }}
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <h2>Individual orders</h2>
 
             <p class="text-muted text-center" ng-show="getOrdersOnDate(getSelectedDate()).length < 1">
                 No orders found
@@ -431,6 +465,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Menu-item</th>
+                    <th>Remarks</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -440,6 +475,9 @@
                     </td>
                     <td>
                         {{ order.name }}
+                    </td>
+                    <td>
+                        {{ order.remarks }}
                     </td>
                 </tr>
                 </tbody>
