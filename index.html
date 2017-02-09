@@ -319,7 +319,15 @@
         </div>
     </div>
 
-    <div class="row" ng-hide="isAFriday(getSelectedDate())">
+    <div class="row" ng-show="orderingAvailableOn(getSelectedDate())">
+        <div class="col-md-12">
+            <p class="text-center text-muted">
+                No orders available on this date!<br/><br/>
+            </p>
+        </div>
+    </div>
+
+    <div class="row" ng-hide="orderingAvailableOn(getSelectedDate())">
         <div class="col-md-12">
 
             <div class="well well-sm">
@@ -364,9 +372,9 @@
     <div class="row" ng-show="selectedEmployeeId">
         <div class="col-md-12">
 
-            <div  class="well clearfix">
+            <div  class="well clearfix" ng-hide="orderingAvailableOn(getSelectedDate())">
 
-                <h3 class="text-center">Today's menu</h3>
+                <h3 class="text-center">Menu</h3>
 
                 <div class="well" ng-repeat="(category, categoryMenuItems) in menuItems">
                     <h4 class="text-center">{{ category }}</h4>
@@ -447,11 +455,6 @@
         </div>
     </div>
 
-    <div class="row" ng-show="isAFriday(getSelectedDate())">
-        <div class="col-md-12">
-            <h2 class="text-center"><br><br><br>It's Friday Food!<br><br><br><br><br></h2>
-        </div>
-    </div>
 </div>
 
 <div class="container" ng-if="activeSection == 'overview'" ng-controller="OverviewController">

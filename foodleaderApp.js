@@ -127,8 +127,8 @@ angular.module('foodleaderApp', ['ngResource'])
                 return moment().add($scope.dayOffset, 'days').format('YYYY-MM-DD');
             };
 
-            $scope.isAFriday = function (date) {
-                return 5 == moment(date).format('e');
+            $scope.orderingAvailableOn = function (date) {
+                return moment(date).format('E') > 4;
             };
 
             MenuItemResource.query().$promise.then(function (menuItems) {
