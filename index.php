@@ -38,7 +38,14 @@
 
 </head>
 
-<body ng-controller="NavigationController">
+<?php
+$backgroundImages = glob('img/backgrounds/*');
+$key = array_rand($backgroundImages);
+$randomBackgroundImageFilename = $backgroundImages[$key];
+?>
+
+<body ng-controller="NavigationController"
+      style="background: url('<?= $randomBackgroundImageFilename ?>'); background-size: cover">
 
 <div class="container">
 
@@ -120,35 +127,37 @@
                 </form>
 
             </div>
+            <div class="well well-sm">
 
-            <p ng-class="text-muted" ng-show="employees.length == 0">
-                No employees found
-            </p>
+                <p ng-class="text-muted" ng-show="employees.length == 0">
+                    No employees found
+                </p>
 
-            <table class="table table-striped" ng-show="employees.length > 0">
+                <table class="table table-striped" ng-show="employees.length > 0">
 
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="employee in employees | orderBy:'name'">
-                    <td>
-                        {{ employee.name }}
-                    </td>
-                    <td>
-                        <button class="btn btn-link pull-right"
-                                ng-click="removeEmployee(employee)">
-                            <i class="glyphicon glyphicon-trash pull-right"></i>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="employee in employees | orderBy:'name'">
+                        <td>
+                            {{ employee.name }}
+                        </td>
+                        <td>
+                            <button class="btn btn-link pull-right"
+                                    ng-click="removeEmployee(employee)">
+                                <i class="glyphicon glyphicon-trash pull-right"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
 
-            </table>
+                </table>
 
+            </div>
         </div>
     </div>
 </div>
@@ -224,55 +233,58 @@
 
             </div>
 
-            <p class="text-muted text-center" ng-show="menuItems.length < 1">
-                No menu-items found
-            </p>
+            <div class="well">
 
-            <table class="table table-striped" ng-show="menuItems.length > 0">
+                <p class="text-muted text-center" ng-show="menuItems.length < 1">
+                    No menu-items found
+                </p>
 
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>One day before</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="menuItem in menuItems"
-                    ng-class="{'success': menuItem.active, 'danger': !menuItem.active}">
-                    <td>
-                        <button class="btn btn-link btn-sm"
-                                ng-click="menuItem.active = !menuItem.active; saveMenu(menuItems);">
-                            <i ng-show="menuItem.active" class="glyphicon glyphicon-eye-open text-success"></i>
-                            <i ng-hide="menuItem.active" class="glyphicon glyphicon-eye-close text-danger"></i>
-                        </button>
-                    </td>
-                    <td>
-                        {{ menuItem.name }}
-                    </td>
-                    <td>
-                        {{ menuItem.category }}
-                    </td>
-                    <td>
-                        {{ menuItem.price | currency:"€ ":2 }}
-                    </td>
-                    <td>
-                        <span class="glyphicon glyphicon-check" ng-if="menuItem.orderOneDayBefore"></span>
-                    </td>
-                    <td>
-                        <button class="btn btn-link pull-right btn-sm"
-                                ng-click="removeMenuItem(menuItem)">
-                            <i class="glyphicon glyphicon-trash pull-right"></i>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
+                <table class="table table-striped" ng-show="menuItems.length > 0">
 
-            </table>
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>One day before</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="menuItem in menuItems"
+                        ng-class="{'success': menuItem.active, 'danger': !menuItem.active}">
+                        <td>
+                            <button class="btn btn-link btn-sm"
+                                    ng-click="menuItem.active = !menuItem.active; saveMenu(menuItems);">
+                                <i ng-show="menuItem.active" class="glyphicon glyphicon-eye-open text-success"></i>
+                                <i ng-hide="menuItem.active" class="glyphicon glyphicon-eye-close text-danger"></i>
+                            </button>
+                        </td>
+                        <td>
+                            {{ menuItem.name }}
+                        </td>
+                        <td>
+                            {{ menuItem.category }}
+                        </td>
+                        <td>
+                            {{ menuItem.price | currency:"€ ":2 }}
+                        </td>
+                        <td>
+                            <span class="glyphicon glyphicon-check" ng-if="menuItem.orderOneDayBefore"></span>
+                        </td>
+                        <td>
+                            <button class="btn btn-link pull-right btn-sm"
+                                    ng-click="removeMenuItem(menuItem)">
+                                <i class="glyphicon glyphicon-trash pull-right"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
 
+                </table>
+
+            </div>
         </div>
     </div>
 </div>
@@ -321,9 +333,11 @@
 
     <div class="row" ng-show="orderingAvailableOn(getSelectedDate())">
         <div class="col-md-12">
-            <p class="text-center text-muted">
-                No orders available on this date!<br/><br/>
-            </p>
+            <div class="well well-sm">
+                <p class="text-center text-muted">
+                    No orders available on this date!<br/><br/>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -372,7 +386,7 @@
     <div class="row" ng-show="selectedEmployeeId">
         <div class="col-md-12">
 
-            <div  class="well clearfix" ng-hide="orderingAvailableOn(getSelectedDate())">
+            <div class="well clearfix" ng-hide="orderingAvailableOn(getSelectedDate())">
 
                 <h3 class="text-center">Menu</h3>
 
@@ -410,7 +424,7 @@
     <div class="row" ng-show="selectedEmployeeId">
         <div class="col-md-12">
 
-            <div  class="well clearfix">
+            <div class="well clearfix">
 
                 <h3 class="text-center">Unpaid orders</h3>
 
@@ -484,67 +498,72 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h2>Summary</h2>
+            <div class="well">
 
-            <p class="text-muted text-center" ng-show="getOrdersOnDate(getSelectedDate()).length < 1">
-                No orders found
-            </p>
-            <table class="table table-striped" ng-show="getOrdersOnDate(getSelectedDate()).length > 0">
+                <h2>Summary</h2>
 
-                <thead>
-                <tr>
-                    <th>Menu-item</th>
-                    <th>Count</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="(item, count) in getSummary(getSelectedDate())">
-                    <td>
-                        {{ item }}
-                    </td>
-                    <td>
-                        {{ count }}
-                    </td>
-                </tr>
-                </tbody>
+                <p class="text-muted text-center" ng-show="getOrdersOnDate(getSelectedDate()).length < 1">
+                    No orders found
+                </p>
+                <table class="table table-striped" ng-show="getOrdersOnDate(getSelectedDate()).length > 0">
 
-            </table>
+                    <thead>
+                    <tr>
+                        <th>Menu-item</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="(item, count) in getSummary(getSelectedDate())">
+                        <td>
+                            {{ item }}
+                        </td>
+                        <td>
+                            {{ count }}
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
 
-            <h2>Individual orders</h2>
+            <div class="well">
+                <h2>Individual orders</h2>
 
-            <p class="text-muted text-center" ng-show="getOrdersOnDate(getSelectedDate()).length < 1">
-                No orders found
-            </p>
+                <p class="text-muted text-center" ng-show="getOrdersOnDate(getSelectedDate()).length < 1">
+                    No orders found
+                </p>
 
-            <table class="table table-striped" ng-show="getOrdersOnDate(getSelectedDate()).length > 0">
+                <table class="table table-striped" ng-show="getOrdersOnDate(getSelectedDate()).length > 0">
 
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Menu-item</th>
-                    <th>Remarks</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="order in getOrdersOnDate(getSelectedDate())">
-                    <td>
-                        {{ getEmployeeName(order.employeeId) }}
-                    </td>
-                    <td>
-                        {{ order.name }}
-                    </td>
-                    <td>
-                        {{ order.remarks }}
-                    </td>
-                </tr>
-                </tbody>
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Menu-item</th>
+                        <th>Remarks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="order in getOrdersOnDate(getSelectedDate())">
+                        <td>
+                            {{ getEmployeeName(order.employeeId) }}
+                        </td>
+                        <td>
+                            {{ order.name }}
+                        </td>
+                        <td>
+                            {{ order.remarks }}
+                        </td>
+                    </tr>
+                    </tbody>
 
-            </table>
+                </table>
 
+            </div>
         </div>
     </div>
 </div>
@@ -567,43 +586,45 @@
 
             </div>
 
-            <p class="text-muted text-center" ng-show="orders.length == 0">
-                No orders found
-            </p>
+            <div class="well well-sm clearfix">
+                <p class="text-muted text-center" ng-show="orders.length == 0">
+                    No orders found
+                </p>
 
-            <table class="table table-striped" ng-show="orders.length > 0">
+                <table class="table table-striped" ng-show="orders.length > 0">
 
-                <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Menu-item</th>
-                    <th>Price</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="order in orders | orderBy:'date'">
-                    <td>
-                        {{ order.date }}
-                    </td>
-                    <td>
-                        {{ order.name }}
-                    </td>
-                    <td>
-                        {{ order.price | currency:"€ ":2}}
-                    </td>
-                </tr>
-                </tbody>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Menu-item</th>
+                        <th>Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="order in orders | orderBy:'date'">
+                        <td>
+                            {{ order.date }}
+                        </td>
+                        <td>
+                            {{ order.name }}
+                        </td>
+                        <td>
+                            {{ order.price | currency:"€ ":2}}
+                        </td>
+                    </tr>
+                    </tbody>
 
-                <tfoot>
-                <tr>
-                    <th>Total</th>
-                    <th></th>
-                    <th>{{ getTotal(orders) | currency:"€ ": 2 }}</th>
-                </tr>
-                </tfoot>
+                    <tfoot>
+                    <tr>
+                        <th>Total</th>
+                        <th></th>
+                        <th>{{ getTotal(orders) | currency:"€ ": 2 }}</th>
+                    </tr>
+                    </tfoot>
 
-            </table>
+                </table>
 
+            </div>
         </div>
     </div>
 </div>
