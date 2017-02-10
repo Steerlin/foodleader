@@ -45,7 +45,7 @@ $randomBackgroundImageFilename = $backgroundImages[$key];
 ?>
 
 <body ng-controller="NavigationController"
-      style="background: url('<?= $randomBackgroundImageFilename ?>'); background-size: cover">
+      style="background: url('<?= $randomBackgroundImageFilename ?>') fixed center center no-repeat; background-size: cover; ">
 
 <div class="container">
 
