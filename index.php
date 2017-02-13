@@ -344,7 +344,7 @@ $randomBackgroundImageFilename = $backgroundImages[$key];
         </div>
     </div>
 
-    <div class="row" ng-show="orderingAvailableOn(getSelectedDate())">
+    <div class="row" ng-show="selectedEmployeeId && orderingAvailableOn(getSelectedDate())">
         <div class="col-md-12">
 
             <div class="well well-sm">
@@ -388,10 +388,10 @@ $randomBackgroundImageFilename = $backgroundImages[$key];
     </div>
 
 
-    <div class="row" ng-show="selectedEmployeeId">
+    <div class="row" ng-show="selectedEmployeeId && orderingAvailableOn(getSelectedDate())">
         <div class="col-md-12">
 
-            <div class="well clearfix" ng-show="orderingAvailableOn(getSelectedDate())">
+            <div class="well clearfix">
 
                 <h3 class="text-center">Menu</h3>
 
