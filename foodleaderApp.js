@@ -128,7 +128,17 @@ angular.module('foodleaderApp', ['ngResource'])
             };
 
             $scope.orderingAvailableOn = function (date) {
-                return moment(date).format('E') > 4;
+                if (moment(date).format('E') > 4) {
+                    return false;
+                }
+
+                if (date == moment().format('YYYY-MM-DD')) {
+                    var todayTenAM = moment({hour: 10});
+                    var todayMidnight = moment({hour: 24});
+                    return !moment().isBetween(todayTenAM, todayMidnight);
+                }
+
+                return true;
             };
 
             MenuItemResource.query().$promise.then(function (menuItems) {
@@ -144,6 +154,11 @@ angular.module('foodleaderApp', ['ngResource'])
             $scope.loadOrderItems();
 
             $scope.order = function (menuItem) {
+
+                if (!$scope.orderingAvailableOn($scope.getSelectedDate())) {
+                    return alert('Ordering is not allow for this moment. ');
+                }
+
                 var orderItem = {
                     'employeeId': $scope.selectedEmployeeId,
                     'name': menuItem.name,
@@ -226,7 +241,7 @@ angular.module('foodleaderApp', ['ngResource'])
             $scope.allOrders = AllOrdersResource.query();
             $scope.employees = EmployeeResource.query();
 
-            $scope.getSummary = function(date) {
+            $scope.getSummary = function (date) {
                 return _.countBy($scope.getOrdersOnDate(date), 'name');
             };
 
