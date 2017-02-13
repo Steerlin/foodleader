@@ -586,12 +586,14 @@ $randomBackgroundImageFilename = $backgroundImages[$key];
 
             </div>
 
-            <div class="well well-sm clearfix">
-                <p class="text-muted text-center" ng-show="orders.length == 0">
+            <div class="well well-sm clearfix" ng-show="orders.length == 0">
+                <p class="text-muted text-center">
                     No orders found
                 </p>
+            </div>
 
-                <table class="table table-striped" ng-show="orders.length > 0">
+            <div class="well well-sm clearfix" ng-show="orders.length > 0">
+                <table class="table table-striped">
 
                     <thead>
                     <tr>
@@ -623,6 +625,14 @@ $randomBackgroundImageFilename = $backgroundImages[$key];
                     </tfoot>
 
                 </table>
+
+                <p class="text-center">
+
+                    <button class="btn btn-lg btn-danger" ng-click="clearOrders()">
+                        Clear unpaid orders
+                    </button>
+
+                </p>
 
             </div>
         </div>
